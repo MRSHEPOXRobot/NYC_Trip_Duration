@@ -1,0 +1,39 @@
+هو ليه طبق الـ Log على t_val ؟
+مش احنا قولنا Validation
+ممنوع نتعلم منها؟
+وده من أجمل الأسئلة.
+الإجابة لاحظ. هو كتب np.log1p()
+ولم يكتب
+fit_log()
+الـ Log
+ليس Learning. الـ Log دالة رياضية فقط.
+يعنى
+10
+↓
+2.39
+مش محتاجة تحسب
+Mean ولا Std ولا Encoder.
+إذن لا يوجد Data Leakage.
+
+
+ال Standard_Scaler & Min_Max_Scaler واي scaler بيعمل fitting للداتا ف علشان كده لو عملت اسكال قبل ال Split
+ممكن معلومة تتسرب ولا حاجه ف بنعمل Splitting الأول وبعدين نقوم Scalling
+لكن ال log1p for target مش بيعمل fitting للداتا زي ال Scalers إلي فوق ف  مفيش هناData Leakage ممكن تتسرب
+ال Scaler بي fit_transform على التران وبعدين بي transform على الفال أو التست
+لكن ال Log1p مش بيعمل كل ده ....
+
+
+
+اي إلي هيحصل لو علمت polynomial regression على التارجت ؟ هل هيحصل Data Leakage ?
+لو عملت
+y
+↓
+y²
+أو
+y³
+هل ده Leakage؟
+الإجابة
+لا.
+لأنك لم تستخدم أى معلومة من الـ Validation.
+*****أنت فقط غيرت شكل الـ Target.*****
+زى الـ Log بالضبط.
