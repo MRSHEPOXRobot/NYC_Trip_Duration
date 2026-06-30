@@ -162,9 +162,9 @@ def visualization(train):
 if __name__ == '__main__':
     #root_dir = 'project-nyc-taxi-trip-duration'
     #train = pd.read_csv(os.path.join(root_dir, 'split_sample/train.csv'))
-    train = pd.read_csv('split_sample/train.csv')
+    train = pd.read_csv('src/data/train.csv')
     #test = pd.read_csv(os.path.join(root_dir, 'split_sample/val.csv'))
-    test = pd.read_csv('split_sample/val.csv')
+    test = pd.read_csv('src/data/val.csv')
 
     prepare_data(train)
     prepare_data(test)
