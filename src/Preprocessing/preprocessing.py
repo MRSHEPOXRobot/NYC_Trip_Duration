@@ -31,8 +31,8 @@ option = config['preprocessing']['scaling']['option']
 
 
 class Preprocessing_Pipeline():
-    def __init__(self):
-        self.poly = None
+    def __init__(self): # Define Constructor
+        self.poly = None # initial value
         self.scaler = None
         self.outlier_limits = {}
         self.label_encoder_store = None
@@ -56,14 +56,14 @@ class Preprocessing_Pipeline():
                 df[col] = df[col].clip(lower, upper)
         return df
 
-    def _calculate_haversine(self, df):
+    def _calculate_haversine(self, df: pd.DataFrame):
         def haversine(lat1, lon1, lat2, lon2):
             R = 6371.0 # Earth Radius
             lat1 ,lon1, lat2, lon2 = map(np.radians, [lat1, lon1, lat2, lon2])
             dlat = lat2 -lat1
             dlon = lon2 -lon1
             a = np.sin(dlat /2 )**2 + np.cos(lat1) * np.cos(lat2) * np.sin(dlon /2 )**2
-            return 2* R * np.arcsin(np.sqrt(a))
+            return 2 * R * np.arcsin(np.sqrt(a))
 
         df[fenum.HAVERSINE_DISTANCE.value] = haversine(
             df[fenum.PICKUP_LATITUDE.value], df[fenum.PICKUP_LONGITUDE.value],
@@ -94,7 +94,7 @@ class Preprocessing_Pipeline():
             elif 11 <= month <= 12:
                 return 'Fall'
             else:
-                return 'Winter '
+                return 'Winter'
 
         df[fenum.SEASON.value] = df[fenum.MONTH.value].apply(getseason)
 
@@ -159,8 +159,8 @@ class Preprocessing_Pipeline():
         if drop_outlier:
             df = self.__apply_outlier_limit(df)
 
-        if best_features:
-            df = df[fenum.BEST_FEATURES.value]
+        if best_features: #if True: Apply on best features only.
+            df = df[fenum.BEST_FEATURES.value] # Update DataFrame
 
         return df
 
@@ -192,17 +192,19 @@ class Preprocessing_Pipeline():
 
 
 if __name__ == '__main__':
+
     df = load_df(train_path)
     print(df.shape)
 
-    preprcess_pipeline = Preprocessing_Pipeline()
-    df, _, _ = preprcess_pipeline.fit_transform(df)
+    preprocess_pipeline = Preprocessing_Pipeline()
+    df, _, _ = preprocess_pipeline.fit_transform(df)
 
     target = fenum.LOG_TRIP_DURATION.value if fenum.LOG_TRIP_DURATION.value in df.columns else fenum.TRIP_DURATION.value
 
     t = df[target]
     x = df.drop(columns=[fenum.LOG_TRIP_DURATION.value, fenum.TRIP_DURATION.value], errors='ignore')
 
-    poly, x = preprcess_pipeline.polynomial_feature(x, None)
-    scaler, x = preprcess_pipeline.scaling(x, None)
+    poly, x = preprocess_pipeline.polynomial_feature(x, None)
+    scaler, x = preprocess_pipeline.scaling(x, None)
     print(t.shape, x.shape)
+

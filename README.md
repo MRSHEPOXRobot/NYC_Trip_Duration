@@ -168,7 +168,7 @@ source .venv/bin/activate
 
 ```bash
 cd src
-pip install -r requirements.txt
+pip install -r requirements.txt.txt
 ```
 
 ---
